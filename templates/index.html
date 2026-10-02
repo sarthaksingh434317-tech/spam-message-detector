@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Message Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="icon">🛡️</div>
+        <h1>Spam Message Detector</h1>
+        <p>AI-powered message classification using Machine Learning</p>
+    </div>
+
+    <div class="card">
+
+        <form method="POST">
+
+            <label for="message">Enter your message</label>
+
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Type or paste a message here..."
+                required
+            >{{ message }}</textarea>
+
+            <button type="submit">🔍 Check Message</button>
+
+        </form>
+
+        {% if prediction %}
+
+        <div class="result {% if prediction == 'SPAM' %}spam{% else %}safe{% endif %}">
+
+            {% if prediction == "SPAM" %}
+                <div class="result-icon">⚠️</div>
+                <h2>SPAM MESSAGE</h2>
+                <p>This message appears to be suspicious.</p>
+            {% else %}
+                <div class="result-icon">✅</div>
+                <h2>NOT SPAM</h2>
+                <p>This message appears to be safe.</p>
+            {% endif %}
+
+            <div class="confidence">
+                Confidence: <strong>{{ confidence }}%</strong>
+            </div>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="footer">
+        <p>Machine Learning • Python • Flask • Scikit-learn</p>
+    </div>
+
+</div>
+
+</body>
+</html>
