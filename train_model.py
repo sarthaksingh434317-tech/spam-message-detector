@@ -3,6 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 import joblib
 import os
 
@@ -44,7 +46,21 @@ model.fit(X_train, y_train)
 accuracy = model.score(X_test, y_test)
 
 print(f"Model Accuracy: {accuracy * 100:.2f}%")
+# Predictions
+y_pred = model.predict(X_test)
 
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+
+disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=["Ham", "Spam"]
+)
+
+disp.plot()
+plt.title("Spam Message Detection - Confusion Matrix")
+plt.savefig("confusion_matrix.png")
+plt.show()
 # Create model folder
 os.makedirs("model", exist_ok=True)
 
